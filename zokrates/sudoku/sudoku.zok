@@ -1,0 +1,112 @@
+// Check that all numbers are valid Sudoku entries (1 to N)
+def checkNumbers<N>(u32[N][N] soluzione) -> bool {
+    bool mut inh = true;
+    for u32 i in 0..N {
+        for u32 j in 0..N {
+            // Check if the number is between 1 and N
+            bool flag = (soluzione[i][j] > 0 && soluzione[i][j] <= N) ? true : false;
+            // inh is true only if all numbers satisfy the condition
+            inh = inh && flag;
+        }
+    }
+    return inh;
+}
+
+// Check that numbers appear exactly once in an array
+def checkRepetition<N>(u32[N] arr) -> bool {
+    bool mut inh = true;
+
+    // Count occurrences
+    u32[N] mut occ = [0; N];
+    for u32 i in 0..N {
+        occ[arr[i] - 1] = occ[arr[i] - 1] + 1;
+    }
+
+    // Check that each number appears exactly once
+    for u32 i in 0..N {
+        bool flag = occ[i] == 1 ? true : false;
+        inh = inh && flag;
+    }
+    return inh;
+}
+
+// Check that all rows are valid
+def checkRows<N>(u32[N][N] soluzione) -> bool {
+    bool mut inh = true;
+
+    for u32 i in 0..N {
+        u32[N] mut arr = [0; N];
+        for u32 j in 0..N {
+            // Each row is passed to the checkRepetition function
+            arr[j] = soluzione[i][j];
+        }
+        // inh is true only if all rows satisfy the condition
+        inh = inh && checkRepetition(arr);
+    }
+    return inh;
+}
+
+// Check that all columns are valid
+def checkColumns<N>(u32[N][N] soluzione) -> bool {
+    bool mut inh = true;
+
+    for u32 i in 0..N {
+        u32[N] mut arr = [0; N];
+        for u32 j in 0..N {
+            // Each column is passed to the checkRepetition function
+            arr[j] = soluzione[j][i];
+        }
+        // inh is true only if all columns satisfy the condition
+        inh = inh && checkRepetition(arr);
+    }
+    return inh;
+}
+
+// Check that all sub-grids are valid
+def checkSquare<N>(u32 squareDim, u32[N][N] soluzione) -> bool {
+    bool mut inh = true;
+
+    for u32 i in 0..squareDim {
+        for u32 j in 0..squareDim {
+            u32 x = i * squareDim;
+            u32 y = j * squareDim;
+            u32[N] mut square = [0; N];
+            for u32 k in 0..squareDim {
+                for u32 h in 0..squareDim {
+                    // Each element of the sub-grid is passed to the checkRepetition function
+                    square[k * squareDim + h] = soluzione[x + k][y + h];
+                }
+            }
+            // inh is true only if all sub-grids satisfy the condition
+            inh = inh && checkRepetition(square);
+        }
+    }
+    return inh;
+}
+
+// Check that the solution matches the problem
+def checkSame<N>(u32[N][N] problema, u32[N][N] soluzione) -> bool {
+    bool mut inh = true;
+    for u32 i in 0..N {
+        for u32 j in 0..N {
+            // If the number exists in "problema", check its equality with "soluzione"
+            bool flag = problema[i][j] == 0 ? true : soluzione[i][j] == problema[i][j];
+            // inh is true only if all numbers already in "problema" match those in "soluzione"
+            inh = inh && flag;
+        }
+    }
+    return inh;
+}
+
+// Main function to validate Sudoku
+def main(u32[9][9] problema, private u32[9][9] soluzione) {
+    u32 squareDim = 3;
+
+    assert(checkNumbers(soluzione));
+    assert(checkRows(soluzione));
+    assert(checkColumns(soluzione));
+    assert(checkSquare(squareDim, soluzione));
+    assert(checkSame(problema, soluzione));
+
+    return;
+}

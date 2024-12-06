@@ -1,0 +1,20 @@
+{
+  "inputs": [
+    {
+      "name": "age",
+      "public": false,
+      "type": "field"
+    },
+    {
+      "name": "limit",
+      "public": true,
+      "type": "field"
+    }
+  ],
+  "output": {
+    "type": "tuple",
+    "components": {
+      "elements": []
+    }
+  }
+}

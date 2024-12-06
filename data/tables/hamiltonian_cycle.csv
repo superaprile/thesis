@@ -1,0 +1,12 @@
+"Analysis",Circom,Zokrates,Noir
+"Transaction Cost",2427346,3723265,2488666
+"Execution Cost (Deploy)",2200744,3398985,2215430
+"Execution Cost (Call)",853828,1067636,395747
+"Constraints",417,15394,5226
+"Wires",509,15303,
+"Proof Size",806,8175,5344
+"Proving Key Size",704434,5946096,36181468
+"Verification Key Size",21231,17825,1779
+"R1CS Size",62612,3235540,
+"Compilation Time",0.055,0.334,0.181
+"Proof Generation Time",0.76,0.21,0.395
